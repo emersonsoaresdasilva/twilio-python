@@ -1,5 +1,6 @@
 import os
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 
 # Cria uma função para enviar WhatsApp
 def envia_mensagem_whatsapp(numero, mensagem):
@@ -17,7 +18,7 @@ def envia_mensagem_whatsapp(numero, mensagem):
                             to=f'whatsapp:+55{numero}'
         )
         # Caso tenha enviado, retorna a mensagem
-        return f'\nWhatsApp enviado com sucesso, para o número: {numero}'
-    except Exception:
+        return f'WhatsApp enviado com sucesso, para o número: {numero}'
+    except TwilioRestException as error:
         # Caso não tenha enviado, retorna o erro
-        return f'\nNão foi possível enviar o WhatsApp, verifique o número digitado: {numero}'
+        return error

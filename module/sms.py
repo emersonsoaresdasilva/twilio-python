@@ -1,5 +1,6 @@
 import os
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 
 # Cria uma função para enviar SMS
 def envia_mensagem_sms(numero, mensagem):
@@ -17,7 +18,7 @@ def envia_mensagem_sms(numero, mensagem):
                             to=f'+55{numero}'
         )
         # Caso tenha enviado, retorna a mensagem
-        return f'\nSMS enviado com sucesso, para o número: {numero}'
-    except Exception:
+        return f'SMS enviado com sucesso, para o número: {numero}'
+    except TwilioRestException as error:
         # Caso não tenha enviado, retorna o erro
-        return f'\nNão foi possível enviar o SMS, verifique o número digitado: {numero}'
+        return error
